@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +24,12 @@ public class LoginController {
 	public static Integer questionNumber = 0;
 	DbConnect db = new DbConnect();
 	String logowanie = "";
-
+	public static Boolean categoryJava = false;
+	public static Boolean categoryDb = false;
+	public static Boolean categoryPython = false;
+	public static Boolean categoryFE = false;
+	public static Boolean categorySpring = false;
+	
     @FXML
     private TextField nameField;
 
@@ -85,7 +91,7 @@ public class LoginController {
     }
 
     @FXML
-    void loginToDb(ActionEvent event) throws ClassNotFoundException, SQLException {
+    void loginToDb(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
 
     	Connection conn = db.Connection();
     	Statement stat = conn.createStatement();
@@ -93,27 +99,49 @@ public class LoginController {
         ResultSet rs = stat.executeQuery("select * from user where name = '"+nameField.getText()+"' and surname = '"+lastField.getText()+"';");
         System.out.println("klik4");
         while (rs.next()) {
-        	  logowanie = rs.getString("userName");
+        	  logowanie = rs.getString("name");
         	  System.out.println(logowanie);
         }
     	
     	
     	if (!logowanie.isEmpty()) {
-    		Stage stageTab = new Stage();
-    		Parent root = (Parent) FXMLLoader.load(getClass().getResource("/fxDB/view/TableView.fxml"));
+    		/*Stage stageTab = new Stage();
+    		Parent root = (Parent) FXMLLoader.load(getClass().getResource("/view/.fxml"));
     		Scene sceneTable = new Scene (root);
     		stageTab.setScene(sceneTable);
-    		stageTab.show();
-
-    		
-    		//grid.setVisible(false);
-    		
+    		stageTab.show();	*/	
+    		System.out.println("zalogowany");
+    		while (true) {
+				if ((questionNumber < 0 | questionNumber > 99)) {
+					questionNumber = Integer.valueOf(questNum.getText());
+					System.out.println(questionNumber);
+					if (cat1Box.isSelected()) {
+						categoryDb = true;
+					}
+					if (cat2Box.isSelected()) {
+						categoryPython = true;
+					}
+					if (cat3Box.isSelected()) {
+						categoryFE = true;
+					}
+					if (cat4Box.isSelected()) {
+						categoryJava = true;
+					}
+					if (cat5Box.isSelected()) {
+						categorySpring = true;
+					}
+					break;
+				} else {
+					JOptionPane.showMessageDialog(null, "Niew³aœciwa liczba pytañ");
+					continue;
+				} 
+			}
+			
     		
     		
     	} else {
-    		logInfo.setText("B£ÊDNY LOGIN LUB HAS£O");
-    		pass.setText(null);
-    		altPass.setText(null);
+    		nameField.setText(null);
+    		lastField.setText(null);
     		JOptionPane.showMessageDialog(null, "Z³e dane logowania");
     	}
     	
