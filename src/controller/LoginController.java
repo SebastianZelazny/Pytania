@@ -29,6 +29,7 @@ public class LoginController {
 	public static Boolean categoryPython = false;
 	public static Boolean categoryFE = false;
 	public static Boolean categorySpring = false;
+	Boolean categoryControl = categoryJava & categoryDb & categoryPython & categoryFE & categorySpring;
 	
     @FXML
     private TextField nameField;
@@ -110,10 +111,11 @@ public class LoginController {
     		Scene sceneTable = new Scene (root);
     		stageTab.setScene(sceneTable);
     		stageTab.show();	*/	
-    		System.out.println("zalogowany");
+    		
+    		questionNumber = Integer.valueOf(questNum.getText());
     		while (true) {
-				if ((questionNumber < 0 | questionNumber > 99)) {
-					questionNumber = Integer.valueOf(questNum.getText());
+				if ((questionNumber > 0 & questionNumber < 99)) {
+					
 					System.out.println(questionNumber);
 					if (cat1Box.isSelected()) {
 						categoryDb = true;
@@ -133,9 +135,13 @@ public class LoginController {
 					break;
 				} else {
 					JOptionPane.showMessageDialog(null, "Niew³aœciwa liczba pytañ");
-					continue;
+					break;
 				} 
 			}
+    		
+    		if (categoryControl.booleanValue()) {
+    			
+    		}
 			
     		
     		
