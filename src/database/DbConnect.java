@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DbConnect {
 
 	public Connection Connection() throws SQLException, ClassNotFoundException {
-		System.out.println("kliker");
+		System.out.println("z klasy db");
 		 Class.forName("com.mysql.jdbc.Driver");
-		 System.out.println("kliker2");
+		 System.out.println("dodany sterownik");
          return DriverManager.getConnection("jdbc:mysql://localhost:3306/pytania","root","Tosi@2016");
 	}
 

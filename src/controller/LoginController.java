@@ -93,6 +93,7 @@ public class LoginController {
 
     @FXML
     void loginToDb(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
+    	System.out.println("login check");
     	String logowanie = "";
     	Connection conn = db.Connection();
     	Statement stat = conn.createStatement();
