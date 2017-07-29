@@ -20,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginController {
-	
+
 	public static Integer questionNumber = 0;
 	DbConnect db = new DbConnect();
 	String logowanie = "";
@@ -153,6 +153,7 @@ public class LoginController {
     	
     	
     }
+
 
 }
 
