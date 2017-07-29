@@ -29,7 +29,7 @@ public class LoginController {
 	public static Boolean categoryPython = false;
 	public static Boolean categoryFE = false;
 	public static Boolean categorySpring = false;
-	Boolean categoryControl = categoryJava | categoryDb | categoryPython | categoryFE | categorySpring;
+	Boolean categoryControl = false;
 	
     @FXML
     private TextField nameField;
@@ -112,10 +112,8 @@ public class LoginController {
     		questionNumber = Integer.valueOf(questNum.getText());
     		while (true) {
 				if ((questionNumber > 0 & questionNumber < 99)) {
-					
-					//System.out.println(questionNumber);
 					System.out.println("check1");
-		    		System.out.println(categoryControl.toString());
+		    		System.out.println("category control status "+categoryControl.toString());
 					if (cat1Box.isSelected()) {
 						categoryDb = true;
 						System.out.println(categoryDb);
@@ -132,11 +130,21 @@ public class LoginController {
 					if (cat5Box.isSelected()) {
 						categorySpring = true;
 					}
-		    		
-		    		if (!(categoryControl = true)) {
-		    			System.out.println("nie wybrano");
+					categoryControl = categoryJava | categoryDb | categoryPython | categoryFE | categorySpring;
+					System.out.println("category control status "+categoryControl.toString());
+		    		if (categoryControl == true) {
+		    			System.out.println("wybór");
+		    			Stage stageTable = new Stage();
+		    			Parent root = (Parent) FXMLLoader.load(getClass().getResource("/view/QuestionsView.fxml"));
+		    	        Scene sceneTable = new Scene(root);
+		    	        stageTable.setScene(sceneTable);
+		    	        stageTable.setTitle("Questions Page");
+		    	        stageTable.show();
+		    			break;
 		    		} else {
-		    			System.out.println("ok");
+		    			System.out.println("nic nie wybrano");
+		    			JOptionPane.showMessageDialog(null, "Wybierz przynajmniej jedn¹ kategoriê");
+		    			break;
 		    		}
 					
 				} else {
