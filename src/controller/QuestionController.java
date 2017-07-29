@@ -2,7 +2,10 @@ package controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import database.DbConnect;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,7 +21,7 @@ public class QuestionController {
 	public void setLicznik(int licznik) {
 		this.licznik = licznik;
 	}
-	
+	DbConnect dbcon;
     @FXML
     private Label LblTitle;
 
@@ -39,13 +42,24 @@ public class QuestionController {
 
     public void initialize()
     {
-    	
+    	dbcon = new DbConnect();
     }
 
 	@FXML
     void NextQuestion(MouseEvent event) {
-    	PreparedStatement preparedStmt = null;
+    	//PreparedStatement preparedStmt = null;
     	Connection con;
+    	ResultSet rs;
+		try {
+			String GetQuest = "Select * from questions where ";
+			con = dbcon.Connection();
+			rs = con.createStatement().executeQuery(GetQuest);
+			setLicznik(getLicznik()+1);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	
     	
     }
