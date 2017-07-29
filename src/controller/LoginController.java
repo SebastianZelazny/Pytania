@@ -23,13 +23,13 @@ public class LoginController {
 
 	public static Integer questionNumber = 0;
 	DbConnect db = new DbConnect();
-	String logowanie = "";
+	
 	public static Boolean categoryJava = false;
 	public static Boolean categoryDb = false;
 	public static Boolean categoryPython = false;
 	public static Boolean categoryFE = false;
 	public static Boolean categorySpring = false;
-	Boolean categoryControl = categoryJava & categoryDb & categoryPython & categoryFE & categorySpring;
+	Boolean categoryControl = categoryJava | categoryDb | categoryPython | categoryFE | categorySpring;
 	
     @FXML
     private TextField nameField;
@@ -93,12 +93,13 @@ public class LoginController {
 
     @FXML
     void loginToDb(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
-
+    	String logowanie = "";
     	Connection conn = db.Connection();
     	Statement stat = conn.createStatement();
-    	System.out.println("klik3");
-        ResultSet rs = stat.executeQuery("select * from user where name = '"+nameField.getText()+"' and surname = '"+lastField.getText()+"';");
-        System.out.println("klik4");
+    	System.out.println("klik5");
+        ResultSet rs = stat.executeQuery("select name from user where name = '"+nameField.getText()+"' and surname = '"+lastField.getText()+"';");
+        System.out.println(rs);
+        
         while (rs.next()) {
         	  logowanie = rs.getString("name");
         	  System.out.println(logowanie);
@@ -106,19 +107,17 @@ public class LoginController {
     	
     	
     	if (!logowanie.isEmpty()) {
-    		/*Stage stageTab = new Stage();
-    		Parent root = (Parent) FXMLLoader.load(getClass().getResource("/view/.fxml"));
-    		Scene sceneTable = new Scene (root);
-    		stageTab.setScene(sceneTable);
-    		stageTab.show();	*/	
-    		
+    		System.out.println("w ifie");
     		questionNumber = Integer.valueOf(questNum.getText());
     		while (true) {
 				if ((questionNumber > 0 & questionNumber < 99)) {
 					
-					System.out.println(questionNumber);
+					//System.out.println(questionNumber);
+					System.out.println("check1");
+		    		System.out.println(categoryControl.toString());
 					if (cat1Box.isSelected()) {
 						categoryDb = true;
+						System.out.println(categoryDb);
 					}
 					if (cat2Box.isSelected()) {
 						categoryPython = true;
@@ -132,16 +131,20 @@ public class LoginController {
 					if (cat5Box.isSelected()) {
 						categorySpring = true;
 					}
-					break;
+		    		
+		    		if (!(categoryControl = true)) {
+		    			System.out.println("nie wybrano");
+		    		} else {
+		    			System.out.println("ok");
+		    		}
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Niew³aœciwa liczba pytañ");
 					break;
 				} 
 			}
     		
-    		if (categoryControl.booleanValue()) {
-    			
-    		}
+    		
 			
     		
     		
